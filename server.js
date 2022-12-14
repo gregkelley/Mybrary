@@ -1,13 +1,14 @@
 
-import express from "express";
-import expressLayouts from 'express-ejs-layouts';
-import router from './routes/index.js';
-import mongoose from 'mongoose';
-
 // proper goo search for dotenv shit: npmjs package dotenv
 // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import * as dotenv from 'dotenv';
 dotenv.config();
+
+import express from "express";
+import expressLayouts from 'express-ejs-layouts';
+import router from './routes/index.js';
+import mongoose from 'mongoose';
+// import dotenv from 'dotenv';
 
 // 16:30  this is kind of a wtf. a wtf wtf. 
 // cannot check .env until we've loaded .env and we don't want to load .env if
@@ -30,6 +31,7 @@ app.set('layout', 'layouts/layouts');
 app.use(expressLayouts);
 app.use(express.static('public'));
 
+console.log('env db url: ', `${process.env.DATABASE_URL}`);
 // set up db connection
 mongoose.set('strictQuery', true); // some flag deprication bullshit
 mongoose.connect(`${process.env.DATABASE_URL}`, { useNewUrlParser: true });
