@@ -9,3 +9,30 @@ starting at 18:30 / 19:08 he rips through getting this app setup to run from git
 using Heroku and the Mongo Atlas cloud database. ho lee crap.
 
 just before 18:30 he creates the app in github and pushes the code.
+
+NOT USING heroku
+the deploy command does not work but this does:
+$ git push heroku HEAD:master
+
+billy
+mdsopl3hTxa0pluG
+
+
+railway.app info:
+gak
+A7D6tGXWD4ifxZVg
+mongodb+srv://gak:A7D6tGXWD4ifxZVg@cluster0.vdgus7h.mongodb.net/?retryWrites=true&w=majority
+
+15:20
+> npm i body-parser
+library to help us access form variables in express
+
+course #3
+https://www.youtube.com/watch?v=Zi2UwhpooF8&list=PLZlA0Gpn_vH8jbFkBjOuFjhxANC63OmXM&index=7
+at 20:00
+install multer - library to work with multipart forms which is what a file form is.
+> npm i multer
+
+for removing book covers that were created but we had an error creating the actual 
+book ... 
+require fs
