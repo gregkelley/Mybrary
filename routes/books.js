@@ -1,21 +1,13 @@
 import express from 'express';
-import Book, { coverImageBasePath } from '../models/book.js';
+import Book from '../models/book.js';
 import Author from '../models/author.js';
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs'; // file system. wow. where have you been all my life...
+// import path from 'path';
+// import fs from 'fs'; // file system. wow. where have you been all my life...
 
 const router = express.Router();
 
 // for uploading files. so complicated.
-const uploadPath = path.join('public', coverImageBasePath);
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-const upload = multer({
-  dest: uploadPath,
-  fileFilter: (req, file, callback) => {
-    callback(null, imageMimeTypes.includes(file.mimetype));
-  },
-});
 
 // get all books
 router.get('/', async (req, res) => {
@@ -60,9 +52,10 @@ router.get('/new', async (req, res) => {
 });
 
 // create books
-router.post('/', upload.single('cover'), async (req, res) => {
-  // upload adds file var to req obj
-  const fileName = req.file != null ? req.file.filename : null;
+// using filepond, we are getting a string instead of a file so do not
+// need the upload bit
+// router.post('/', upload.single('cover'), async (req, res) => {
+router.post('/', async (req, res) => {
 
   // construct book object
   const book = new Book({
@@ -70,17 +63,16 @@ router.post('/', upload.single('cover'), async (req, res) => {
     author: req.body.author,
     publishDate: new Date(req.body.publishDate),
     pageCount: req.body.pageCount,
-    coverImageName: fileName,
     description: req.body.description,
   });
+  // added for filepond
+  saveCover(book, req.body.cover);
 
   try {
     const newBook = await book.save();
     // res.redirect(`books/${newBook.id}`)
     res.redirect(`books`);
   } catch {
-    // remove book cover on error, if it was created
-    if (book.coverImageName != null) removeBookCover(book.coverImageName);
     renderNewPage(res, book, true);
   }
 });
@@ -97,7 +89,6 @@ async function renderNewPage(res, book, hasError = false) {
     };
     if (hasError) {
       params.errorMessage = 'Error Creating Book';
-      // need to remove the book cover we created in the /public dir
     }
 
     // const book = new Book();
@@ -107,10 +98,15 @@ async function renderNewPage(res, book, hasError = false) {
   }
 }
 
-function removeBookCover(fileName) {
-  console.log('remove file: ', fileName);
-  fs.unlink(path.join(uploadPath, fileName), (err) => {
-    if (err) console.error(err);
-  });
+function saveCover(book, coverEncoded) {
+  // check for valid cover then save
+  if (coverEncoded == null) return;
+
+  const cover = JSON.parse(coverEncoded);
+  if (cover != null && imageMimeTypes.includes(cover.type)) {
+    book.coverImage = new Buffer.from(cover.data, 'base64');
+    book.coverImageType = cover.type;
+  }
 }
+
 export default router;

@@ -10,6 +10,15 @@ import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
+//filepond for dealing with files 
+// > npm i filepond --save
+// import * as FilePond from 'filepond';
+// import 'filepond/dist/filepond.min.css';
+// or these in layout.ejs
+// <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+// <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+// also need file encode library
+
 // routes
 import indexRouter from './routes/index.js';
 import authorRouter from './routes/authors.js';

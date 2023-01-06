@@ -1,10 +1,4 @@
 import mongoose from "mongoose";
-import path from 'path';
-
-// var to deal with multipart file upload stuff
-// will be storing book covers at some location on the server. apparently instead
-// of in the db
-export const coverImageBasePath = 'uploads/bookCovers';
 
 const bookSchema = new mongoose.Schema({
   title: {
@@ -27,7 +21,13 @@ const bookSchema = new mongoose.Schema({
     required: true,
     default: Date.now
   },
-  coverImageName: {
+  // coverImageName: {  removed along with multer when filepond added
+  coverImage: {
+    type: Buffer,  // buffer of the data representing our image
+    required: true
+  },
+  // added for filepond
+  coverImageType: {
     type: String,
     required: true
   },
@@ -40,8 +40,10 @@ const bookSchema = new mongoose.Schema({
 
 bookSchema.virtual('coverImagePath').get(function() {
   // define how we get path. have to use function for this.
-  if (this.coverImageName != null) {
-    return path.join('/', coverImageBasePath, this.coverImageName);
+  if (this.coverImage != null && this.coverImageType != null) {
+    // 15:30 in video #4
+    // will return the proper string for our image source. have no idea how this works
+    return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
   }
 })
 
