@@ -11,7 +11,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 // get all books
 router.get('/', async (req, res) => {
-  // create a query obj that we and build a real query from
+  // create a query obj that we build a real query from
   let query = Book.find();
 
   if (req.query.title != null && req.query.title != '') {
@@ -108,5 +108,44 @@ function saveCover(book, coverEncoded) {
     book.coverImageType = cover.type;
   }
 }
+
+// show book info. cover, author, date, count, desc. then edit, delete buttons and 
+// author link button. Receives book.id
+router.get('/:id', async (req, res) =>{
+  try {
+    // const author = await Author.findById(req.params.id);
+    const book = await Book.findById(req.params.id);
+    // if (book.length < 1) console.log('no book found');
+    const authorName = await Author.findById(book.author);
+    res.render('books/show', 
+        { book: book, 
+          authorName: authorName,
+        });
+  } catch (e) {
+    console.log(e);
+    res.redirect('/');
+  }
+});
+
+// delete some book. I copied and mod'd from author
+router.delete('/:id', async (req, res) =>{
+  let book;
+
+  try {
+    // both of these methods work. er, no. Need remove to hit the pre condition.
+    // await Book.findByIdAndDelete(req.params.id);
+    book = await Book.findById(req.params.id);
+    await book.remove();
+    res.redirect('/books');
+  } catch {
+    // unable to find an book with that id
+    if (book == null) {
+      res.redirect('/')
+    } else {
+      // res.redirect(`/books/${book.id}`);
+      res.redirect('/books');
+    }
+  }
+});
 
 export default router;

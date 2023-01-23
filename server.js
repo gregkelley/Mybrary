@@ -9,6 +9,7 @@ import express from 'express';
 import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
 
 //filepond for dealing with files 
 // > npm i filepond --save
@@ -44,6 +45,7 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layouts');
 app.use(expressLayouts);
+app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 

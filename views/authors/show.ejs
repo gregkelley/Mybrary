@@ -1,0 +1,17 @@
+<!-- show info for a selected author. Name, edit and delete buttons and 
+    any books they are associated with -->
+
+<h2><%= author.name %></h2>
+<a href="/authors/<%= author.id %>/edit">Edit</a>
+
+<!-- use the delete form in the partials folder to do delete delete -->
+<%- include('../partials/deleteForm', 
+    { url: `/authors/${author.id}` }) %> 
+
+<% if (booksByAuthor.length > 0) { %> 
+  <h2>Books By Author</h2>
+  <% booksByAuthor.forEach(book => { %>
+    <img height="150" width="100" src="<%= book.coverImagePath %>">
+    <%- include('../partials/deleteForm', { url: `/books/${book.id}` }) %>
+  <% }) %>
+<% } %> 

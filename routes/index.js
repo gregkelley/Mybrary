@@ -15,6 +15,7 @@ router.get('/', async (req, res) => {
     books = [];
   }
 
+  // render the index.ejs file from the (root of the) views folder
   res.render('index', { books: books });
 
 });

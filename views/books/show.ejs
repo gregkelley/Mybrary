@@ -1,0 +1,20 @@
+<!-- show info for a Book. Name, edit and delete buttons -->
+
+<h2><%= book.title %></h2>
+
+<!-- book cover here. TODO -->
+<img height="150" width="100" src="<%= book.coverImagePath %>">
+
+<h4>Author: <%= authorName.name %> </h4>
+<h4>Publish Date: <%= book.publishDate %> </h4>
+<h4>Page Count: <%= book.pageCount %> </h4>
+<h4>Description: <%= book.description %> </h4>
+
+<a href="/books/<%= book.id %>/edit">Edit</a>
+
+<!-- use the delete form in the partials folder to do delete delete -->
+<%- include('../partials/deleteForm', 
+    { url: `/books/${book.id}` }) %> 
+
+<!-- View Author button -->
+<a href="/authors/<%= authorName.id %>">View Author</a>
