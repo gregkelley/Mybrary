@@ -2,11 +2,14 @@
 
 <h2><%= book.title %></h2>
 
-<!-- book cover here. TODO -->
+<!-- book cover here. -->
+<a href="/books/<%= book.id %>">
 <img height="150" width="100" src="<%= book.coverImagePath %>">
+</a>
 
-<h4>Author: <%= authorName.name %> </h4>
-<h4>Publish Date: <%= book.publishDate %> </h4>
+<!-- <h4>Author: < = authorName.name %> </h4> -->
+<h4>Author: <%= book.author.name %> </h4>
+<h4>Publish Date: <%= book.publishDate.toDateString() %> </h4>
 <h4>Page Count: <%= book.pageCount %> </h4>
 <h4>Description: <%= book.description %> </h4>
 
@@ -17,4 +20,4 @@
     { url: `/books/${book.id}` }) %> 
 
 <!-- View Author button -->
-<a href="/authors/<%= authorName.id %>">View Author</a>
+<a href="/authors/<%= book.author.id %>">View Author</a>

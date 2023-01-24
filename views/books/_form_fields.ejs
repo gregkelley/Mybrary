@@ -9,8 +9,11 @@
   <label>Author</label>
   <select name="author">
     <% authors.forEach(author => { %>
-      <!-- yeah. -->
-      <% if (author.id === book.author) { %>
+      <!-- yeah. 
+      < console.log('book form fields authorid ', author.id, ' bookauthor ', book.author.id) %> 
+      need to turn both items into actual strings in the next line
+      -->
+      <% if (`${author.id}` === `${book.author}`) { %>
         <option selected label="<%= author.name %>" value="<%= author.id %>"></option>
       <% } else { %>
         <option label="<%= author.name %>" value="<%= author.id %>"></option>
