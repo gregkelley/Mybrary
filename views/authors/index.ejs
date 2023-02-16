@@ -1,6 +1,6 @@
 <!-- Author Search Page -->
 
-<h2>Search Authors</h2>
+<h2 class="page-header">Search Authors</h2>
 
 <form action="/authors" method="GET">
   <label>Name</label>
@@ -14,18 +14,20 @@
 
 <% authors.forEach(author => { %>
 <div><%= author.name %></div>
-<a href="/authors/<%= author.id %>">View</a>
-<a href="/authors/<%= author.id %>/edit">Edit</a>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="/authors/<%= author.id %>">View</a>
+    <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Edit</a>
 
-<!-- special way to send a Delete which we cannot do from the browser 
-      reference method-override -->
-<!-- Instead of doing it like this, we will use a partial and pass the
-    url info
-<form method="POST" action="/authors/< = author.id >?_method=DELETE">
-  <button type="submit">Delete</button>
-</form> 
--->
+    <!-- special way to send a Delete which we cannot do from the browser 
+        reference method-override -->
+    <!-- Instead of doing it like this, we will use a partial and pass the
+      url info
+    <form method="POST" action="/authors/< = author.id >?_method=DELETE">
+    <button type="submit">Delete</button>
+    </form> 
+    -->
 
-<!-- this is how we include a partial: do the DELETE form -->
-<%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+    <!-- this is how we include a partial: do the DELETE form -->
+    <%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+  </div>
 <% }) %>

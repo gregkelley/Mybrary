@@ -2,6 +2,7 @@ import express from "express";
 import Book from '../models/book.js';
 const router = express.Router();
 
+// called from server.js via the / or index route
 
 router.get('/', async (req, res) => {
   // empty books obj that we will populate w/ db query

@@ -1,5 +1,6 @@
-<h2>Recently Added</h2>
+<h2 class="page-header">Recently Added</h2>
 
+<!-- this is called from routes/index.js in the res.render() call -->
 <div>
   <% books.forEach(book => { %>
     <img height="150" width="100" src="<%= book.coverImagePath %>">
